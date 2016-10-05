@@ -36,6 +36,15 @@ class ViewController: UIViewController {
         boxAnimation.duration  = 1
         boxAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         box.layer.add(boxAnimation, forKey: nil)
+        
+        let zAnimation = CABasicAnimation(keyPath: "zPosition")
+        zAnimation.fromValue = 0
+        zAnimation.toValue   = 100
+        zAnimation.duration  = 1
+        zAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        box.layer.add(zAnimation, forKey: nil)
+        
+        
         box.layer.speed = 0.0
         box.layer.anchorPoint = CGPoint(x: 0.5, y: 0.0)
     }
@@ -57,7 +66,7 @@ class ViewController: UIViewController {
     func pan(gestureRecognizer: UIPanGestureRecognizer) {
         
         let translation = gestureRecognizer.translation(in: gestureRecognizer.view)
-        var progress = (-translation.y / 200)
+        var progress = (-translation.y / 300)
         
         if forwards == false {
             progress = 1 + progress
