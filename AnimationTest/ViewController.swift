@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let box = UIView(frame:CGRect(x: 0, y: 100, width: 40, height: 40))
+    var box: UIView!
     
     var displayLink: CADisplayLink!
     
@@ -26,17 +26,18 @@ class ViewController: UIViewController {
         
         self.displayLink = CADisplayLink(target: self, selector: #selector(tick))
         
-        box.backgroundColor = UIColor.yellow
-        self.view.addSubview(box)
+        self.box = UIView(frame: self.view.bounds)
+        self.box.backgroundColor = UIColor.yellow
+        self.view.addSubview(self.box)
         
-        let boxAnimation = CABasicAnimation(keyPath: "position.x")
+        let boxAnimation = CABasicAnimation(keyPath: "position.y")
         boxAnimation.fromValue = 0
-        boxAnimation.toValue = self.view.frame.size.width - box.frame.width
-        boxAnimation.duration = 1
+        boxAnimation.toValue   = -(self.box.frame.size.height - 40)
+        boxAnimation.duration  = 1
         boxAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        box.layer.add(boxAnimation, forKey : "key")
+        box.layer.add(boxAnimation, forKey: nil)
         box.layer.speed = 0.0
-        box.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        box.layer.anchorPoint = CGPoint(x: 0.5, y: 0.0)
     }
     
     func tick() {
@@ -56,7 +57,7 @@ class ViewController: UIViewController {
     func pan(gestureRecognizer: UIPanGestureRecognizer) {
         
         let translation = gestureRecognizer.translation(in: gestureRecognizer.view)
-        var progress = (translation.x / 200)
+        var progress = (-translation.y / 200)
         
         if forwards == false {
             progress = 1 + progress
